@@ -17,13 +17,9 @@
 package com.codelabs.state.todo
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.material.AmbientContentColor
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -64,7 +60,9 @@ fun TodoScreen(
         // For quick testing, a random item generator button
         Button(
             onClick = { onAddItem(generateRandomTodoItem()) },
-            modifier = Modifier.padding(16.dp).fillMaxWidth(),
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
         ) {
             Text("Add random item")
         }
@@ -87,7 +85,11 @@ fun TodoRow(todo: TodoItem, onItemClicked: (TodoItem) -> Unit, modifier: Modifie
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(todo.task)
-        Icon(todo.icon.imageVector)
+        val iconAlpha = remember(todo.id) { randomTint() }
+        Icon(
+            imageVector = todo.icon.imageVector,
+            tint = AmbientContentColor.current.copy(alpha = iconAlpha)
+        )
     }
 }
 
