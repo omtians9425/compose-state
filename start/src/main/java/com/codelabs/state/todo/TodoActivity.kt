@@ -20,6 +20,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.Surface
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.setContent
 import com.codelabs.state.ui.StateCodelabTheme
 
@@ -32,9 +33,15 @@ class TodoActivity : AppCompatActivity() {
         setContent {
             StateCodelabTheme {
                 Surface {
-                    // TODO: build the screen in compose
+                    TodoActivityScreen(viewModel = todoViewModel)
                 }
             }
         }
     }
+}
+
+@Composable
+fun TodoActivityScreen(viewModel: TodoViewModel) {
+    val items = listOf<TodoItem>()
+    TodoScreen(items = items, onAddItem = { /*TODO*/ }, onRemoveItem = { /*TODO*/ })
 }
