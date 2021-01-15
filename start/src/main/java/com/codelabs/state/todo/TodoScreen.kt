@@ -126,8 +126,10 @@ fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
             )
             TodoEditButton(
                 onClick = {
-                    onItemComplete(TodoItem(text))
-                    setText("") // Clear the internal text
+                    onItemComplete(TodoItem(text, icon))
+                    // Clear the internal text and icon
+                    setIcon(TodoIcon.Default)
+                    setText("")
                 },
                 text = "Add",
                 modifier = Modifier.align(Alignment.CenterVertically),
