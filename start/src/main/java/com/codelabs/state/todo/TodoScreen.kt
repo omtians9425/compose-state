@@ -111,6 +111,12 @@ fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
     val (text, setText) = remember { mutableStateOf("") }
     val (icon, setIcon) = remember { mutableStateOf(TodoIcon.Default) }
     val iconVisible = text.isNotBlank()
+    val submit = {
+        onItemComplete(TodoItem(text, icon))
+        // Clear the internal text and icon
+        setIcon(TodoIcon.Default)
+        setText("")
+    }
     Column {
         Row(
             Modifier
@@ -122,15 +128,11 @@ fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
                 onTextChange = setText,
                 modifier = Modifier
                     .weight(1f)
-                    .padding(end = 8.dp)
+                    .padding(end = 8.dp),
+                onImeAction = submit
             )
             TodoEditButton(
-                onClick = {
-                    onItemComplete(TodoItem(text, icon))
-                    // Clear the internal text and icon
-                    setIcon(TodoIcon.Default)
-                    setText("")
-                },
+                onClick = submit,
                 text = "Add",
                 modifier = Modifier.align(Alignment.CenterVertically),
                 enabled = text.isNotBlank()
