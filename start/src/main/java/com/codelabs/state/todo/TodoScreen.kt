@@ -109,6 +109,8 @@ private fun randomTint(): Float {
 @Composable
 fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
     val (text, setText) = remember { mutableStateOf("") }
+    val (icon, setIcon) = remember { mutableStateOf(TodoIcon.Default) }
+    val iconVisible = text.isNotBlank()
     Column {
         Row(
             Modifier
@@ -131,6 +133,11 @@ fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
                 modifier = Modifier.align(Alignment.CenterVertically),
                 enabled = text.isNotBlank()
             )
+        }
+        if (iconVisible) {
+            AnimatedIconRow(icon, setIcon, Modifier.padding(8.dp))
+        } else {
+            Spacer(modifier = Modifier.preferredHeight(16.dp))
         }
     }
 }
