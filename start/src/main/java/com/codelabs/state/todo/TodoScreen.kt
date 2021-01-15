@@ -108,30 +108,31 @@ private fun randomTint(): Float {
 
 @Composable
 fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
+    val (text, setText) = remember { mutableStateOf("") }
     Column {
         Row(
             Modifier
                 .padding(horizontal = 16.dp)
                 .padding(top = 16.dp)
         ) {
-            TodoInputTextField(
-                Modifier
+            TodoInputText(
+                text = text,
+                onTextChange = setText,
+                modifier = Modifier
                     .weight(1f)
                     .padding(end = 8.dp)
             )
             TodoEditButton(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    onItemComplete(TodoItem(text))
+                    setText("") // Clear the internal text
+                },
                 text = "Add",
-                modifier = Modifier.align(Alignment.CenterVertically)
+                modifier = Modifier.align(Alignment.CenterVertically),
+                enabled = text.isNotBlank()
             )
         }
     }
-}
-
-@Composable
-fun TodoInputTextField(modifier: Modifier) {
-    val (text, setText) = remember { mutableStateOf("") }
-    TodoInputText(text, setText, modifier)
 }
 
 @Preview
